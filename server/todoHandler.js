@@ -5,6 +5,22 @@ const mongoose = require("mongoose");
 const todoSchema = require("./todoSchema");
 const Todo = new mongoose.model("Todo", todoSchema);
 
+// get single todo
+router.get("/:id", async (req, res) => {
+  Todo.find({ _id: req.params.id }).exec((err, data) => {
+    if (err) {
+      res.status(500).json({
+        message: "there was a server side error",
+      });
+    } else {
+      res.status(200).json({
+        message: "todo were getted successfully!",
+        data,
+      });
+    }
+  });
+});
+
 // get multiple todos
 router.get("/", async (req, res) => {
   Todo.find().exec((err, data) => {
